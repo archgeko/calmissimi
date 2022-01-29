@@ -10,7 +10,7 @@ public class ChainController : MonoBehaviour
 {
     private float _speed;
 
-
+    public string chainTag;
     public GameObject carpet;
     public GameObject repository;
     public List<GameObject> blockPrefabList;
@@ -35,6 +35,12 @@ public class ChainController : MonoBehaviour
         this.SpawnBlocks();
         this.gameManager=FindObjectOfType<GameManager>();
         gameManager.GameStarted+=OnStartGame;
+        gameManager.GameStarted+=OnEndGame;
+    }
+
+    private void OnEndGame()
+    {
+        return;
     }
 
 

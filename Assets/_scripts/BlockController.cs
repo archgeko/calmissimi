@@ -1,10 +1,13 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class BlockController : MonoBehaviour
 {
+    private ChainController _chainController;
     public float speed=1.0f;
+    public static Action<BlockController> BlockCollided;
     void Awake()
     {
         
@@ -24,12 +27,17 @@ public class BlockController : MonoBehaviour
     public void Move(){
         transform.position+=Vector3.back*speed*GameManager.gameSpeed;
     }
-
-    private void OnTriggerEnter(Collider other){
-        Debug.Log("Da cancellare");
+    public void SetChainController(ChainController chainController){
+        this._chainController=chainController;
+    }
+    private void OnTriggerExit(Collider other){
         if (other.CompareTag("TriggerPoint")){
+            Debug.Log("Da cancellare");
+            other.transform.parent.GetComponent<ChainController>().AddBlockToRepository(this.gameObject);
+            other.transform.parent.GetComponent<ChainController>().AddRandomToCarpet();
         }
     }
+    
 
     
 }
