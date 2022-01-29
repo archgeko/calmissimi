@@ -8,28 +8,49 @@ using System.Linq;
 
 public class ChainController : MonoBehaviour
 {
+    private float _speed;
+
+
     public GameObject carpet;
     public GameObject repository;
-
     public List<GameObject> blockPrefabList;
-
+    public GameManager gameManager;
     public int numberToSpawn;
 
+    public float Speed
+    {
+        get
+        {
+            return _speed;
+        }
+        set
+        {
+            _speed = value;
+            SetAllChildSpeed();
+        }
+    }
+    
     void Awake()
     {
         this.SpawnBlocks();
+        this.gameManager=FindObjectOfType<GameManager>();
+        gameManager.GameStarted+=OnStartGame;
     }
+
 
     // Start is called before the first frame update
     void Start()
     {
 
     }
-
-    // Update is called once per frame
-    void Update()
+    private void OnStartGame()
     {
-
+        SpawnBlocks();
+        for (int i = 0; i < this.numberToSpawn; i++)
+        {
+            AddRandomToCarpet();
+        }
+        Speed=0.05f;
     }
 
     [Button]
@@ -51,11 +72,11 @@ public class ChainController : MonoBehaviour
             Vector3 newScale = blockGO.transform.localScale;
             if (UnityEngine.Random.Range(0, 2) == 1)
             {
-                newScale.x = newScale.x=-1;
+                newScale.x = newScale.x = -1;
             }
             if (UnityEngine.Random.Range(0, 2) == 1)
             {
-                newScale.z = newScale.z= -1;
+                newScale.z = newScale.z = -1;
             }
             blockGO.transform.localScale = newScale;
         }
@@ -76,16 +97,48 @@ public class ChainController : MonoBehaviour
             blockGO.transform.position = chainPart.transform.position;
         }
     }
-
     [Button]
-    public void AddRandomToCarpet(){
+    public void AddRandomToCarpet()
+    {
         List<GameObject> repositoryBlocks = new List<GameObject>();
         foreach (Transform tr in repository.transform)
         {
             repositoryBlocks.Add(tr.gameObject);
         }
-        repositoryBlocks=repositoryBlocks.OrderBy(x => Guid.NewGuid()).ToList();
+        repositoryBlocks = repositoryBlocks.OrderBy(x => Guid.NewGuid()).ToList();
 
-        this.AddToChainPart(repositoryBlocks[0],this.carpet);   
+        repositoryBlocks[0].gameObject.GetComponent<BlockController>().speed=_speed;
+        this.AddToChainPart(repositoryBlocks[0], this.carpet);
+    }
+
+    public void AddBlockToRepository(GameObject blockToRepository)
+    {
+        blockToRepository.gameObject.GetComponent<BlockController>().speed=0;
+        this.AddToChainPart(blockToRepository, this.repository);
+    }
+
+    public List<Transform> GetAllChild(){
+        List<Transform> allChild=new List<Transform>();
+        foreach (Transform tr in repository.transform)
+        {
+            allChild.Add(tr);
+        }
+        foreach (Transform tr in carpet.transform)
+        {
+            allChild.Add(tr);
+        }
+        return allChild;
+    }
+    
+    public void SetAllChildSpeed()
+    {
+        foreach (Transform tr in repository.transform)
+        {
+            tr.gameObject.GetComponent<BlockController>().speed=0;
+        }
+        foreach (Transform tr in carpet.transform)
+        {
+            tr.gameObject.GetComponent<BlockController>().speed=_speed;
+        }
     }
 }
