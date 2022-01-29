@@ -41,6 +41,8 @@
      <Compile Include="Assets\_scripts\ChainController.cs" />
      <Compile Include="Assets\_scripts\BlockController.cs" />
      <Compile Include="Assets\_scripts\GameManager.cs" />
+     <Compile Include="Assets\_scripts\UIIconController.cs" />
+     <Compile Include="Assets\_scripts\IconManager.cs" />
     <Reference Include="UnityEngine">
         <HintPath>C:\Program Files\Unity\2020.3.23f1\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>
     </Reference>

@@ -32,7 +32,6 @@ public class BlockController : MonoBehaviour
     }
     private void OnTriggerExit(Collider other){
         if (other.CompareTag("TriggerPoint")){
-            Debug.Log("Da cancellare");
             other.transform.parent.GetComponent<ChainController>().AddBlockToRepository(this.gameObject);
             other.transform.parent.GetComponent<ChainController>().AddRandomToCarpet();
         }
