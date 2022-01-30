@@ -64,8 +64,9 @@ public class ChainController : MonoBehaviour
     {
         for (int i = 0; i < this.numberToSpawn; i++)
         {
+            int randomIndex= UnityEngine.Random.Range(0,blockPrefabList.Count);
             GameObject currBlock = Instantiate(
-                blockPrefabList[0],
+                blockPrefabList[randomIndex],
                 this.transform
             );
             this.AddToChainPart(currBlock, this.repository);
