@@ -15,6 +15,9 @@ public class Dropzone : MonoBehaviour, IDropHandler
     private IconManager _iconManager;
     public DropzoneTypes dropzoneType;
 
+    public static Action<GameObject, UIIconController> DicePanelEvent;
+    public static Action<GameObject, UIIconController> DiceLevelupEvent;
+    public static Action<GameObject, UIIconController> DiceLevelupFailEvent;
     private void Awake() {
         _iconManager=FindObjectOfType<IconManager>();
     }
@@ -22,17 +25,17 @@ public class Dropzone : MonoBehaviour, IDropHandler
     {
         GameObject dropper=eventData.pointerDrag;
         if (dropper != null){
+            UIIconController currDroppedUIController=dropper.GetComponent<UIIconController>();
             if (dropzoneType == DropzoneTypes.panel){
-                _iconManager.DroppedOnPanel(dropper);
+                DicePanelEvent?.Invoke(this.gameObject,currDroppedUIController);
             }
             else if (dropzoneType == DropzoneTypes.action){
                 UIIconController currDropzoneUIController= GetComponent<UIIconController>();
-                UIIconController currDroppedUIController=dropper.GetComponent<UIIconController>();
                 if (currDropzoneUIController.actionType==currDroppedUIController.actionType){
-                    _iconManager.LevelUp(dropper);
+                    DiceLevelupEvent?.Invoke(this.gameObject,currDroppedUIController);
                 }
                 else {
-                    currDroppedUIController.ResetPosition();
+                    DiceLevelupFailEvent?.Invoke(this.gameObject,currDroppedUIController);
                 }
             }
         }
