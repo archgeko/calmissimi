@@ -13,6 +13,7 @@ public class IconManager : MonoBehaviour
     public float distanceFactorFromLatestSpawn;
     public int numberToSpawn;
     public static Action<ActionTypes, GameObject> PanelActionActivated;
+    
     private bool toDestroy=false;
 
     // Start is called before the first frame update
