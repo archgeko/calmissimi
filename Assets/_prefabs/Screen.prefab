@@ -81,7 +81,7 @@ MonoBehaviour:
   carpet: {fileID: 3353542432777890393}
   repository: {fileID: 3353542432773640225}
   blockPrefabList:
-  - {fileID: 3515825402450536262, guid: 4c2ae552ecf305b4f97ef36c8809f2ea, type: 3}
+  - {fileID: 5799140606290828621, guid: c5383e8783ab3a545a1a54903dd1ede9, type: 3}
   gameManager: {fileID: 0}
   numberToSpawn: 10
 --- !u!1 &3353542432773640225
@@ -296,7 +296,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3353542433762615391}
   m_Layer: 0
-  m_Name: Screen SX
+  m_Name: Screen
   m_TagString: Untagged
   m_Icon: {fileID: -964228994112308473, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0

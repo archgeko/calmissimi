@@ -8,7 +8,7 @@ using System.Linq;
 
 public class ChainController : MonoBehaviour
 {
-    private float _speed;
+    public float speed;
 
     public string chainTag;
     public GameObject carpet;
@@ -21,11 +21,11 @@ public class ChainController : MonoBehaviour
     {
         get
         {
-            return _speed;
+            return speed;
         }
         set
         {
-            _speed = value;
+            speed = value;
             SetAllChildSpeed();
         }
     }
@@ -56,7 +56,7 @@ public class ChainController : MonoBehaviour
         {
             AddRandomToCarpet();
         }
-        Speed=0.05f;
+        Speed=5f;
     }
 
     [Button]
@@ -71,7 +71,7 @@ public class ChainController : MonoBehaviour
             this.AddToChainPart(currBlock, this.repository);
         }
     }
-    public void AddToChainPart(GameObject blockGO, GameObject chainPart, bool randomize = true)
+    public void AddToChainPart(GameObject blockGO, GameObject chainPart, bool randomize = true, int displacement=0)
     {
         if (randomize)
         {
@@ -96,7 +96,7 @@ public class ChainController : MonoBehaviour
 
         if (chainpartBlocks.Count > 0)
         {
-            blockGO.transform.position = chainpartBlocks[chainpartBlocks.Count - 1].transform.position + Vector3.forward * 10;
+            blockGO.transform.position = chainpartBlocks[chainpartBlocks.Count - 1].transform.position + Vector3.forward * displacement;
         }
         else
         {
@@ -113,8 +113,8 @@ public class ChainController : MonoBehaviour
         }
         repositoryBlocks = repositoryBlocks.OrderBy(x => Guid.NewGuid()).ToList();
 
-        repositoryBlocks[0].gameObject.GetComponent<BlockController>().speed=_speed;
-        this.AddToChainPart(repositoryBlocks[0], this.carpet);
+        repositoryBlocks[0].gameObject.GetComponent<BlockController>().speed=speed;
+        this.AddToChainPart(repositoryBlocks[0], this.carpet,true,10);
     }
 
     public void AddBlockToRepository(GameObject blockToRepository)
@@ -144,7 +144,7 @@ public class ChainController : MonoBehaviour
         }
         foreach (Transform tr in carpet.transform)
         {
-            tr.gameObject.GetComponent<BlockController>().speed=_speed;
+            tr.gameObject.GetComponent<BlockController>().speed=speed;
         }
     }
 }

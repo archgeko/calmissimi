@@ -25,7 +25,7 @@ public class BlockController : MonoBehaviour
     }
 
     public void Move(){
-        transform.position+=Vector3.back*speed*GameManager.gameSpeed;
+        transform.position+=Vector3.back*speed*GameManager.gameSpeed*Time.deltaTime;
     }
     public void SetChainController(ChainController chainController){
         this._chainController=chainController;
