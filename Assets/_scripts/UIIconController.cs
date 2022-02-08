@@ -3,18 +3,25 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
+using System.Linq;
 
 
 public enum ActionTypes{
     jump,
-    shoot
+    shoot,
+    cista
 }
+
 public class UIIconController : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, IEndDragHandler, IDragHandler
 {
     public Canvas canvas;
     public RectTransform _canvasRect;
+    public List<Color> levelUpColorsList;
     public Vector3 _startingPosition;
     public ActionTypes actionType;
+    public int _maxLevel;
+    public int _currentLevel;
     private RectTransform _rectTransform;
     private Rigidbody2D _rigidbody2D;
     private BoxCollider2D _boxCollider2D;
@@ -31,6 +38,8 @@ public class UIIconController : MonoBehaviour, IPointerDownHandler, IBeginDragHa
         _startingPosition=this.transform.position;
         canvas=FindObjectOfType<Canvas>(); //OH NO - Test
         _canvasRect=canvas.GetComponent<RectTransform>();
+        _maxLevel=2;
+        _currentLevel=0;
 
     }
     public void OnBeginDrag(PointerEventData eventData)
@@ -63,6 +72,15 @@ public class UIIconController : MonoBehaviour, IPointerDownHandler, IBeginDragHa
     }
     public void ResetPosition(){
         this.transform.position=this._startingPosition;
+    }
+    public void LevelUpAndUpdateGraphics(){
+        _currentLevel=_currentLevel+1>_maxLevel? _maxLevel:_currentLevel+1;
+        UpdateIconGraphics();
+    }
+
+    private void UpdateIconGraphics(){
+        Image currImage= gameObject.GetComponent<Image>();
+        currImage.color=  levelUpColorsList.ElementAt(_currentLevel);
     }
 
     public void OnPointerDown(PointerEventData eventData)

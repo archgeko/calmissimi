@@ -26,7 +26,7 @@ public class PlayerController : MonoBehaviour
             {
                 case ActionTypes.jump:
                     Debug.Log($"The player {gameObject.name} is jumping");
-                    _rigidbody.AddForce(Vector3.up*10,ForceMode.Impulse);
+                    _rigidbody.AddForce(Vector3.up*7,ForceMode.Impulse);
                     break;
                 case ActionTypes.shoot:
                     Debug.Log($"The player {gameObject.name} is shooting");
